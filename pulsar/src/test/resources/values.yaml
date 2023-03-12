@@ -1,0 +1,89 @@
+
+defaultPulsarImageTag: 2.10.3
+# local WebSight minimal pulsar
+images:
+  zookeeper:
+    repository: apachepulsar/pulsar
+  bookie:
+    repository: apachepulsar/pulsar
+  autorecovery:
+    repository: apachepulsar/pulsar
+  broker:
+    repository: apachepulsar/pulsar
+  proxy:
+    repository: apachepulsar/pulsar
+  functions:
+    repository: apachepulsar/pulsar
+  pulsar_manager:
+    repository: apachepulsar/pulsar-manager
+    tag: v0.3.0
+    pullPolicy: IfNotPresent
+
+## deployed withh emptyDir
+volumes:
+  persistence: false
+
+# disabled AntiAffinity
+affinity:
+  anti_affinity: false
+
+# disable auto recovery and manager that is not working
+components:
+  autorecovery: false
+  pulsar_manager: true
+  functions: false
+  toolset: true
+
+kube-prometheus-stack:
+  enabled: false
+
+zookeeper:
+  replicaCount: 1
+  podMonitor:
+    enabled: false
+
+bookkeeper:
+  replicaCount: 1
+  podMonitor:
+    enabled: false
+
+broker:
+  replicaCount: 1
+  configData:
+    ## Enable `autoSkipNonRecoverableData` since bookkeeper is running
+    ## without persistence
+    autoSkipNonRecoverableData: "true"
+    # storage settings
+    managedLedgerDefaultEnsembleSize: "1"
+    managedLedgerDefaultWriteQuorum: "1"
+    managedLedgerDefaultAckQuorum: "1"
+  podMonitor:
+    enabled: false
+
+autorecovery:
+  podMonitor:
+    enabled: false
+
+proxy:
+  replicaCount: 1
+  ports:
+    http: 8080
+    https: 443
+    pulsar: 6650
+    pulsarssl: 6651
+  podMonitor:
+    enabled: false
+
+pulsar_metadata:
+  image:
+    # the image used for running `pulsar-cluster-initialize` job
+    repository: apachepulsar/pulsar
+    # uses defaultPulsarImageTag when unspecified
+    tag: 2.10.3
+
+pulsar_manager:
+  configData:
+    SPRING_CONFIGURATION_FILE: "/pulsar-manager/pulsar-manager/application.properties"
+    # Workaround for https://github.com/apache/pulsar-manager/issues/505
+    URL: ""
+    PULSAR_PEEK_MESSAGE: "true"
