@@ -28,6 +28,7 @@ public class ExclusiveSubscriptionMessageOrderTest {
         .subscriptionName("unit-test")
         .subscriptionInitialPosition(SubscriptionInitialPosition.Earliest)
         .subscriptionType(SubscriptionType.Exclusive)
+        .receiverQueueSize(1)
         .subscribe();
 
     producer.send("A");
@@ -59,6 +60,7 @@ public class ExclusiveSubscriptionMessageOrderTest {
         .subscriptionInitialPosition(SubscriptionInitialPosition.Earliest)
         .subscriptionType(SubscriptionType.Exclusive)
         .negativeAckRedeliveryDelay(500, TimeUnit.MILLISECONDS)
+        .receiverQueueSize(1)
         .subscribe();
 
     producer.send("A");
