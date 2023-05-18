@@ -1,5 +1,5 @@
 
-defaultPulsarImageTag: 2.10.3
+defaultPulsarImageTag: 3.0.0
 # local WebSight minimal pulsar
 images:
   zookeeper:
@@ -73,13 +73,6 @@ proxy:
     pulsarssl: 6651
   podMonitor:
     enabled: false
-
-pulsar_metadata:
-  image:
-    # the image used for running `pulsar-cluster-initialize` job
-    repository: apachepulsar/pulsar
-    # uses defaultPulsarImageTag when unspecified
-    tag: 2.10.3
 
 pulsar_manager:
   configData:
