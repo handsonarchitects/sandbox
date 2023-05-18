@@ -16,4 +16,9 @@ dependencies {
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        events("passed")
+        showStandardStreams = true
+    }
 }
