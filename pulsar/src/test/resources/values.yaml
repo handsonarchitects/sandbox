@@ -1,6 +1,6 @@
 
 defaultPulsarImageTag: 3.0.0
-# local WebSight minimal pulsar
+
 images:
   zookeeper:
     repository: apachepulsar/pulsar
@@ -19,7 +19,7 @@ images:
     tag: v0.3.0
     pullPolicy: IfNotPresent
 
-## deployed withh emptyDir
+## deployed with emptyDir
 volumes:
   persistence: false
 
