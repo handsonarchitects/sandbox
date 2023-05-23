@@ -79,6 +79,11 @@ broker:
     managedLedgerDefaultEnsembleSize: "1"
     managedLedgerDefaultWriteQuorum: "1"
     managedLedgerDefaultAckQuorum: "1"
+
+    managedLedgerMaxEntriesPerLedger: "2"
+    managedLedgerMinLedgerRolloverTimeMinutes: "1"
+    managedLedgerCursorMaxEntriesPerLedger: "2"
+
   podMonitor:
     enabled: false
 
